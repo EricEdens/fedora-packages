@@ -51,7 +51,6 @@ for cmd in google_guest_agent google_metadata_script_runner; do
 done
 
 %install
-%gopkginstall
 install -m 0755 -vd                     %{buildroot}%{_bindir}
 install -m 0755 -vd                     %{buildroot}%{_datadir}/google-guest-agent
 install -m 0755 -vd                     %{buildroot}%{_unitdir}
@@ -73,8 +72,6 @@ install -m 0644 -vp 90-google-guest-agent.preset    %{buildroot}%{_presetdir}
 %license LICENSE
 %doc CONTRIBUTING.md README.md
 %{_bindir}/*
-
-%gopkgfiles
 
 %changelog
 * Mon Jan 25 23:45:46 UTC 2021 Eric Edens <ericedens@google.com> - 20201217.02-1
