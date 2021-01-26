@@ -8,15 +8,15 @@
 %gometa
 
 %global common_description %{expand:
-# FIXME}
+Logging facade used by GCP guest environment for structured logging.}
 
 %global golicenses      LICENSE
 %global godocs          CONTRIBUTING.md
 
 Name:           %{goname}
 Version:        0
-Release:        0.1%{?dist}
-Summary:        None
+Release:        1%{?dist}
+Summary:        Common logger used by GCP guest environment
 
 # Upstream license specification: Apache-2.0
 License:        ASL 2.0
