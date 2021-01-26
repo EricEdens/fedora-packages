@@ -68,6 +68,9 @@ BuildRequires:  golang(google.golang.org/grpc/status)
 %prep
 %goprep
 
+# Skip wsfc_test.go, which assumes that network is available.
+rm google_guest_agent/wsfc_test.go
+
 %build
 for cmd in google_guest_agent google_metadata_script_runner; do
   %gobuild -o %{gobuilddir}/bin/$(basename $cmd) %{goipath}/$cmd
@@ -80,6 +83,7 @@ install -m 0755 -vp %{gobuilddir}/bin/* %{buildroot}%{_bindir}/
 
 %if %{with check}
 %check
+
 %gocheck
 %endif
 
