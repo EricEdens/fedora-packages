@@ -9,36 +9,10 @@ Version:                20201217.02
 %gometa
 
 %global common_description %{expand:
-# FIXME}
+Provides guest environment for instances running on Google Cloud Platform.}
 
-%global golicenses      LICENSE\\\
-                        THIRD_PARTY_LICENSES/google.golang.org/grpc/LICENSE T\\\
-                        HIRD_PARTY_LICENSES/google.golang.org/genproto/LICENS\\\
-                        E THIRD_PARTY_LICENSES/google.golang.org/api/LICENSE \\\
-                        THIRD_PARTY_LICENSES/google.golang.org/protobuf/LICEN\\\
-                        SE\\\
-                        THIRD_PARTY_LICENSES/github.com/tarm/serial/LICENSE\\\
-                        THIRD_PARTY_LICENSES/github.com/googleapis/gax-\\\
-                        go/v2/LICENSE THIRD_PARTY_LICENSES/github.com/golang/\\\
-                        groupcache/lru/LICENSE THIRD_PARTY_LICENSES/github.co\\\
-                        m/golang/protobuf/LICENSE\\\
-                        THIRD_PARTY_LICENSES/github.com/google/go-\\\
-                        cmp/cmp/LICENSE THIRD_PARTY_LICENSES/github.com/go-\\\
-                        ini/ini/LICENSE THIRD_PARTY_LICENSES/github.com/Googl\\\
-                        eCloudPlatform/guest-agent/google_guest_agent/LICENSE\\\
-                        THIRD_PARTY_LICENSES/github.com/GoogleCloudPlatform/g\\\
-                        uest-logging-go/logger/LICENSE THIRD_PARTY_LICENSES/g\\\
-                        ithub.com/kardianos/service/LICENSE\\\
-                        THIRD_PARTY_LICENSES/cloud.google.com/go/LICENSE THIR\\\
-                        D_PARTY_LICENSES/cloud.google.com/go/storage/LICENSE \\\
-                        THIRD_PARTY_LICENSES/cloud.google.com/go/logging/LICE\\\
-                        NSE THIRD_PARTY_LICENSES/go.opencensus.io/LICENSE\\\
-                        THIRD_PARTY_LICENSES/golang.org/x/oauth2/LICENSE\\\
-                        THIRD_PARTY_LICENSES/golang.org/x/sys/LICENSE\\\
-                        THIRD_PARTY_LICENSES/golang.org/x/text/LICENSE\\\
-                        THIRD_PARTY_LICENSES/golang.org/x/net/LICENSE THIRD_P\\\
-                        ARTY_LICENSES/golang.org/x/sync/semaphore/LICENSE
-%global godocs          CONTRIBUTING.md README.md packaging/debian/changelog
+%global golicenses      LICENSE
+%global godocs          CONTRIBUTING.md README.md
 
 Name:           %{goname}
 Release:        1%{?dist}
@@ -79,38 +53,25 @@ done
 %install
 %gopkginstall
 install -m 0755 -vd                     %{buildroot}%{_bindir}
-install -m 0755 -vp %{gobuilddir}/bin/* %{buildroot}%{_bindir}/
+install -m 0755 -vd                     %{buildroot}%{_datadir}/google-guest-agent
+install -m 0755 -vd                     %{buildroot}%{_unitdir}
+install -m 0755 -vd                     %{buildroot}%{_presetdir}
+
+install -m 0755 -vp %{gobuilddir}/bin/*             %{buildroot}%{_bindir}
+install -m 0644 -vp instance_configs.cfg            %{buildroot}%{_datadir}/google-guest-agent
+install -m 0644 -vp google-guest-agent.service      %{buildroot}%{_unitdir}
+install -m 0644 -vp google-startup-scripts.service  %{buildroot}%{_unitdir}
+install -m 0644 -vp google-shutdown-scripts.service %{buildroot}%{_unitdir}
+install -m 0644 -vp 90-google-guest-agent.preset    %{buildroot}%{_presetdir}
 
 %if %{with check}
 %check
-
 %gocheck
 %endif
 
 %files
-%license LICENSE THIRD_PARTY_LICENSES/google.golang.org/grpc/LICENSE
-%license THIRD_PARTY_LICENSES/google.golang.org/genproto/LICENSE
-%license THIRD_PARTY_LICENSES/google.golang.org/api/LICENSE
-%license THIRD_PARTY_LICENSES/google.golang.org/protobuf/LICENSE
-%license THIRD_PARTY_LICENSES/github.com/tarm/serial/LICENSE
-%license THIRD_PARTY_LICENSES/github.com/googleapis/gax-go/v2/LICENSE
-%license THIRD_PARTY_LICENSES/github.com/golang/groupcache/lru/LICENSE
-%license THIRD_PARTY_LICENSES/github.com/golang/protobuf/LICENSE
-%license THIRD_PARTY_LICENSES/github.com/google/go-cmp/cmp/LICENSE
-%license THIRD_PARTY_LICENSES/github.com/go-ini/ini/LICENSE
-%license THIRD_PARTY_LICENSES/github.com/GoogleCloudPlatform/guest-agent/google_guest_agent/LICENSE
-%license THIRD_PARTY_LICENSES/github.com/GoogleCloudPlatform/guest-logging-go/logger/LICENSE
-%license THIRD_PARTY_LICENSES/github.com/kardianos/service/LICENSE
-%license THIRD_PARTY_LICENSES/cloud.google.com/go/LICENSE
-%license THIRD_PARTY_LICENSES/cloud.google.com/go/storage/LICENSE
-%license THIRD_PARTY_LICENSES/cloud.google.com/go/logging/LICENSE
-%license THIRD_PARTY_LICENSES/go.opencensus.io/LICENSE
-%license THIRD_PARTY_LICENSES/golang.org/x/oauth2/LICENSE
-%license THIRD_PARTY_LICENSES/golang.org/x/sys/LICENSE
-%license THIRD_PARTY_LICENSES/golang.org/x/text/LICENSE
-%license THIRD_PARTY_LICENSES/golang.org/x/net/LICENSE
-%license THIRD_PARTY_LICENSES/golang.org/x/sync/semaphore/LICENSE
-%doc CONTRIBUTING.md README.md packaging/debian/changelog
+%license LICENSE
+%doc CONTRIBUTING.md README.md
 %{_bindir}/*
 
 %gopkgfiles
