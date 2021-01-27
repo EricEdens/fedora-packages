@@ -52,12 +52,12 @@ done
 
 %install
 install -m 0755 -vd                     %{buildroot}%{_bindir}
-install -m 0755 -vd                     %{buildroot}%{_datadir}/google-guest-agent
+install -m 0755 -vd                     %{_sysconfdir}/default
 install -m 0755 -vd                     %{buildroot}%{_unitdir}
 install -m 0755 -vd                     %{buildroot}%{_presetdir}
 
 install -m 0755 -vp %{gobuilddir}/bin/*             %{buildroot}%{_bindir}
-install -m 0644 -vp instance_configs.cfg            %{buildroot}%{_datadir}/google-guest-agent
+install -m 0644 -vp instance_configs.cfg            %{buildroot}%{_sysconfdir}/default
 install -m 0644 -vp google-guest-agent.service      %{buildroot}%{_unitdir}
 install -m 0644 -vp google-startup-scripts.service  %{buildroot}%{_unitdir}
 install -m 0644 -vp google-shutdown-scripts.service %{buildroot}%{_unitdir}
@@ -69,9 +69,16 @@ install -m 0644 -vp 90-google-guest-agent.preset    %{buildroot}%{_presetdir}
 %endif
 
 %files
+%defattr(-,root,root,-)
 %license LICENSE
 %doc CONTRIBUTING.md README.md
-%{_bindir}/*
+%config(noreplace) %{_sysconfdir}/default/instance_configs.cfg
+%{_bindir}/google_guest_agent
+%{_bindir}/google_metadata_script_runner
+%{_unitdir}/google-guest-agent.service
+%{_unitdir}/google-startup-scripts.service
+%{_unitdir}/google-startup-scripts.service
+%{_presetdir}/90-google-guest-agent.preset
 
 %changelog
 * Mon Jan 25 23:45:46 UTC 2021 Eric Edens <ericedens@google.com> - 20201217.02-1
