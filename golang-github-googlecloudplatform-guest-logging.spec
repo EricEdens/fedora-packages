@@ -8,7 +8,7 @@
 %gometa
 
 %global common_description %{expand:
-Logging facade used by GCP guest environment for structured logging.}
+Logging facade used by GCP guest environment for structured logging}
 
 %global golicenses      LICENSE
 %global godocs          CONTRIBUTING.md
