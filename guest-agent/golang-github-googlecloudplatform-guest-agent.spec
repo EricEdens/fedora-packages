@@ -33,6 +33,8 @@ BuildRequires: golang(google.golang.org/grpc/codes)
 BuildRequires: golang(google.golang.org/grpc/status)
 BuildRequires: systemd-rpm-macros
 
+Provides: google-guest-agent = %{version}-%{release}
+
 Requires: systemd
 
 %description
@@ -87,7 +89,7 @@ install -m 0644 -vp 90-google-guest-agent.preset    %{buildroot}%{_presetdir}
 %systemd_post %{services}
 
 %preun
-%systemd_preun google-guest-agent.service
+%systemd_preun %{services}
 
 %postun
 %systemd_postun_with_restart %{services}
