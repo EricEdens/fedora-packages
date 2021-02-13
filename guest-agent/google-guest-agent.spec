@@ -13,7 +13,7 @@ Version:                20201217.02
 %global golicenses      LICENSE
 %global godocs          CONTRIBUTING.md README.md
 
-Name:           %{goname}
+Name:           google-guest-agent
 Release:        1%{?dist}
 Summary:        Google Compute Engine guest environment
 
@@ -32,8 +32,6 @@ BuildRequires: golang(google.golang.org/grpc)
 BuildRequires: golang(google.golang.org/grpc/codes)
 BuildRequires: golang(google.golang.org/grpc/status)
 BuildRequires: systemd-rpm-macros
-
-Provides: google-guest-agent = %{version}-%{release}
 
 Requires: systemd
 
@@ -59,14 +57,12 @@ done
 install -m 0755 -vd                     %{buildroot}%{_bindir}
 install -m 0755 -vd                     %{buildroot}%{_sysconfdir}/default
 install -m 0755 -vd                     %{buildroot}%{_unitdir}
-install -m 0755 -vd                     %{buildroot}%{_presetdir}
 
 install -m 0755 -vp %{gobuilddir}/bin/*             %{buildroot}%{_bindir}
 install -m 0644 -vp instance_configs.cfg            %{buildroot}%{_sysconfdir}/default
 install -m 0644 -vp google-guest-agent.service      %{buildroot}%{_unitdir}
 install -m 0644 -vp google-startup-scripts.service  %{buildroot}%{_unitdir}
 install -m 0644 -vp google-shutdown-scripts.service %{buildroot}%{_unitdir}
-install -m 0644 -vp 90-google-guest-agent.preset    %{buildroot}%{_presetdir}
 
 %if %{with check}
 %check
@@ -74,7 +70,6 @@ install -m 0644 -vp 90-google-guest-agent.preset    %{buildroot}%{_presetdir}
 %endif
 
 %files
-%defattr(-,root,root,-)
 %license LICENSE
 %doc CONTRIBUTING.md README.md
 %config(noreplace) %{_sysconfdir}/default/instance_configs.cfg
@@ -83,7 +78,6 @@ install -m 0644 -vp 90-google-guest-agent.preset    %{buildroot}%{_presetdir}
 %{_unitdir}/google-guest-agent.service
 %{_unitdir}/google-startup-scripts.service
 %{_unitdir}/google-shutdown-scripts.service
-%{_presetdir}/90-google-guest-agent.preset
 
 %post
 %systemd_post %{services}
