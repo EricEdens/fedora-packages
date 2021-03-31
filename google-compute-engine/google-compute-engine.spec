@@ -39,7 +39,6 @@ cp -v                       src/lib/udev/rules.d/*          %{buildroot}%{_udevr
 cp -v                       src/lib/udev/google_nvme_id     %{buildroot}%{_udevrulesdir}/../
 
 %files
-%defattr(0644,root,root,0755)
 %license LICENSE
 %doc README.md
 %attr(0755,-,-) %{_bindir}/*
