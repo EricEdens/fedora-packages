@@ -47,10 +47,8 @@ cp -v                       src/lib/udev/google_nvme_id     %{buildroot}%{_udevr
 %{_udevrulesdir}/*
 %config(noreplace) /etc/rsyslog.d/*
 %config(noreplace) /etc/sysctl.d/*
-# Omit 'noreplace' since the values in these values are required for a system to run
-# correctly on Google Compute Engine.
-%config /etc/dracut.conf.d/*
-%config /etc/modprobe.d/*
+%config(noreplace) /etc/dracut.conf.d/*
+%config(noreplace) /etc/modprobe.d/*
 
 %changelog
 * Mon Jan 25 23:45:46 UTC 2021 Eric Edens <ericedens@google.com> - 20201207.00
