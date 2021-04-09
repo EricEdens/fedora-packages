@@ -30,6 +30,14 @@ rm -rf src/etc/apt
 # Remove script for EL6.
 rm -f  src/sbin/google-dhclient-script
 
+# Move dracut and modprobe.d from /etc to /usr/lib to allow
+# user to put modifications in /etc that will be retained
+# after update.
+# https://bugzilla.redhat.com/show_bug.cgi?id=1925323
+mkdir -p src/usr/lib/dracut
+mv src/etc/dracut.conf.d src/usr/lib/dracut
+mv src/etc/modprobe.d src/usr/lib
+
 %build
 
 %install
@@ -45,10 +53,10 @@ cp -v                       src/lib/udev/google_nvme_id     %{buildroot}%{_udevr
 %attr(0755,-,-) /etc/dhcp/dhclient.d/google_hostname.sh
 %attr(0755,-,-) %{_udevrulesdir}/../google_nvme_id
 %{_udevrulesdir}/*
+/usr/lib/dracut/dracut.conf.d/*.conf
+/usr/lib/modprobe.d/*.conf
 %config(noreplace) /etc/rsyslog.d/*
 %config(noreplace) /etc/sysctl.d/*
-%config(noreplace) /etc/dracut.conf.d/*
-%config(noreplace) /etc/modprobe.d/*
 
 %changelog
 * Mon Jan 25 23:45:46 UTC 2021 Eric Edens <ericedens@google.com> - 20201207.00
