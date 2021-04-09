@@ -2,7 +2,7 @@
 
 Name: google-compute-engine
 Version: 20201207.00
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Google Compute Engine guest environment tools
 License: ASL 2.0
 URL: https://github.com/GoogleCloudPlatform/%{srcname}

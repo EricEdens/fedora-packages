@@ -14,7 +14,7 @@ Version:                20201217.02
 %global godocs          CONTRIBUTING.md README.md
 
 Name:           google-guest-agent
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Google Compute Engine guest environment
 
 License:        ASL 2.0
