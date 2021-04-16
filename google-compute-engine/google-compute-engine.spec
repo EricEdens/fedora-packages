@@ -2,7 +2,7 @@
 
 Name: google-compute-engine
 Version: 20201207.00
-Release: 4%{?dist}
+Release: 5%{?dist}
 Summary: Google Compute Engine guest environment tools
 License: ASL 2.0
 URL: https://github.com/GoogleCloudPlatform/%{srcname}
@@ -54,11 +54,11 @@ cp -v                       src/lib/udev/google_nvme_id     %{buildroot}%{_udevr
 %attr(0755,-,-) /etc/dhcp/dhclient.d/google_hostname.sh
 %attr(0755,-,-) %{_udevrulesdir}/../google_nvme_id
 %{_udevrulesdir}/*
-/usr/lib/dracut/dracut.conf.d/*.conf
-/usr/lib/modprobe.d/*.conf
+%{_prefix}/lib/dracut/dracut.conf.d/*.conf
+%{_prefix}/lib/modprobe.d/*.conf
 %config(noreplace) /etc/rsyslog.d/*
 %config(noreplace) /etc/sysctl.d/*
 
 %changelog
-* Mon Jan 25 23:45:46 UTC 2021 Eric Edens <ericedens@google.com> - 20201207.00-4
+* Mon Jan 25 23:45:46 UTC 2021 Eric Edens <ericedens@google.com> - 20201207.00-5
 - Initial package
