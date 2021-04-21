@@ -1,8 +1,8 @@
 %global srcname guest-configs
 
-Name: google-compute-engine
+Name: google-compute-engine-guest-configs
 Version: 20201207.00
-Release: 5%{?dist}
+Release: 6%{?dist}
 Summary: Google Compute Engine guest environment tools
 License: ASL 2.0
 URL: https://github.com/GoogleCloudPlatform/%{srcname}
@@ -16,8 +16,8 @@ Requires: google-compute-engine-oslogin
 Requires: google-guest-agent
 Requires: rsyslog
 Requires: nvme-cli
-
 BuildRequires: systemd
+Provides: google-compute-engine = %{version}-%{release}
 
 %description
 This package contains scripts, configuration, and init files for features
@@ -60,5 +60,5 @@ cp -v                       src/lib/udev/google_nvme_id     %{buildroot}%{_udevr
 %config(noreplace) /etc/sysctl.d/*
 
 %changelog
-* Mon Jan 25 23:45:46 UTC 2021 Eric Edens <ericedens@google.com> - 20201207.00-5
+* Mon Jan 25 23:45:46 UTC 2021 Eric Edens <ericedens@google.com> - 20201207.00-6
 - Initial package
