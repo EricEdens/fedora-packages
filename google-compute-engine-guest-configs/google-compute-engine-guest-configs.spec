@@ -2,7 +2,7 @@
 
 Name: google-compute-engine-guest-configs
 Version: 20201207.00
-Release: 6%{?dist}
+Release: 7%{?dist}
 Summary: Google Compute Engine guest environment tools
 License: ASL 2.0
 URL: https://github.com/GoogleCloudPlatform/%{srcname}
@@ -17,6 +17,8 @@ Requires: google-guest-agent
 Requires: rsyslog
 Requires: nvme-cli
 BuildRequires: systemd
+Obsoletes: google-compute-engine-tools < 2.8.12-11
+Provides: google-compute-engine-tools = 2.8.12-11
 Provides: google-compute-engine = %{version}-%{release}
 
 %description
@@ -42,10 +44,10 @@ mv src/etc/modprobe.d src/usr/lib
 %build
 
 %install
-cp -vR                      src/{etc,usr}                   %{buildroot}
-install -m 0755 -vd         %{buildroot}%{_udevrulesdir}
-cp -v                       src/lib/udev/rules.d/*          %{buildroot}%{_udevrulesdir}
-cp -v                       src/lib/udev/google_nvme_id     %{buildroot}%{_udevrulesdir}/../
+cp -vpR                     src/{etc,usr}                   %{buildroot}
+install -m 0755 -vdp        %{buildroot}%{_udevrulesdir}
+cp -vp                      src/lib/udev/rules.d/*          %{buildroot}%{_udevrulesdir}
+cp -vp                      src/lib/udev/google_nvme_id     %{buildroot}%{_udevrulesdir}/../
 
 %files
 %license LICENSE
@@ -60,5 +62,5 @@ cp -v                       src/lib/udev/google_nvme_id     %{buildroot}%{_udevr
 %config(noreplace) /etc/sysctl.d/*
 
 %changelog
-* Mon Jan 25 23:45:46 UTC 2021 Eric Edens <ericedens@google.com> - 20201207.00-6
+* Mon Jan 25 23:45:46 UTC 2021 Eric Edens <ericedens@google.com> - 20201207.00-7
 - Initial package
